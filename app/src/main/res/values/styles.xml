@@ -8,4 +8,18 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="RecipeNameTextStyle">
+        <item name="android:textSize">@dimen/recipe_name_text_size</item>
+        <item name="android:textColor">@color/colorBlack</item>
+        <item name="android:fontFamily">monospace</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style name="ServingTextStyle">
+        <item name="android:textSize">@dimen/serving_text_size</item>
+        <item name="android:textColor">@color/colorBlack</item>
+        <item name="android:fontFamily">monospace</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+
 </resources>
