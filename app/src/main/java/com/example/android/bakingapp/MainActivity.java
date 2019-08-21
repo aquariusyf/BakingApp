@@ -6,14 +6,19 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 
 import com.example.android.bakingapp.adapters.RecipeListAdapter;
 import com.example.android.bakingapp.utils.JsonUtil;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
-    public static final String RECIPE_PARCEL_KEY = "recipe";
+    public static final String RECIPE_PARCEL_KEY = "single_recipe";
+    public static final String RECIPE_LIST_PARCEL_KEY = "recipe_list";
 
     private RecyclerView mRecipeListRv;
     private RecipeListAdapter mAdapter;
@@ -23,14 +28,24 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        initRecipeList();
-
+        if(savedInstanceState != null && savedInstanceState.containsKey(RECIPE_LIST_PARCEL_KEY)) {
+            initRecipeList(savedInstanceState.<Recipe>getParcelableArrayList(RECIPE_LIST_PARCEL_KEY));
+        } else {
+            initRecipeList(JsonUtil.getRecipes(this));
+        }
     }
 
-    private void initRecipeList() {
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelableArrayList(RECIPE_LIST_PARCEL_KEY,
+                (ArrayList<? extends Parcelable>) mAdapter.getRecipeList());
+    }
+
+    private void initRecipeList(List<Recipe> recipeList) {
         mRecipeListRv = findViewById(R.id.rv_recipe_list);
         mRecipeListRv.setLayoutManager(new LinearLayoutManager(this));
-        mAdapter = new RecipeListAdapter(this, JsonUtil.getRecipes(this),
+        mAdapter = new RecipeListAdapter(this, recipeList,
                 new RecipeListAdapter.OnListItemClickListener() {
                     @Override
                     public void onItemClick(int position) {

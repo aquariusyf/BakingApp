@@ -10,4 +10,7 @@
     <string name="dummy_measure">CUP</string>
     <string name="ingredient_label">Ingredient: </string>
     <string name="dummy_ingredient">Nutella or other chocolate-hazelnut spread</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

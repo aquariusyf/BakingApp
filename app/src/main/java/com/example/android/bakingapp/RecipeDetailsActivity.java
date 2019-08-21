@@ -14,10 +14,13 @@ import com.example.android.bakingapp.adapters.RecipeListAdapter;
 public class RecipeDetailsActivity extends AppCompatActivity {
 
     private static final String LOG_TAG = RecipeDetailsActivity.class.getSimpleName();
+    public static final String INGREDIENT_TYPE = "ingredient";
+    public static final String STEP_TYPE = "step";
 
     private RecyclerView ingredientsListRv;
     private RecipeDetailListAdapter mAdapter;
-    private Recipe mRecipe;
+    private static Recipe mRecipe;
+    private static boolean twoPanel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,10 +32,24 @@ public class RecipeDetailsActivity extends AppCompatActivity {
             finish();
         }
         setTitle(mRecipe.getName());
-        initViews();
+        checkIfTwoPanel();
+        if(twoPanel) {
+
+        } else {
+            initViewsForSinglePanel();
+        }
+
     }
 
-    private void initViews() {
+    private void checkIfTwoPanel() {
+        if(findViewById(R.id.fragment_container) != null) {
+            twoPanel = true;
+        } else {
+            twoPanel = false;
+        }
+    }
+
+    private void initViewsForSinglePanel() {
         ingredientsListRv = findViewById(R.id.rv_recipe_detail_list);
         ingredientsListRv.setLayoutManager(new LinearLayoutManager(this));
         mAdapter = new RecipeDetailListAdapter(
@@ -42,7 +59,9 @@ public class RecipeDetailsActivity extends AppCompatActivity {
                 new RecipeListAdapter.OnListItemClickListener() {
                     @Override
                     public void onItemClick(int position) {
-
+                        if(position == 0) {
+                            startActivity(createIngredientsIntent());
+                        }
                     }
                 });
         ingredientsListRv.setAdapter(mAdapter);
@@ -59,4 +78,16 @@ public class RecipeDetailsActivity extends AppCompatActivity {
         }
         return true;
     }
+
+    private Intent createIngredientsIntent() {
+        Intent intent = new Intent(RecipeDetailsActivity.this,
+                RecipeIngredientsAndStepsActivity.class);
+        intent.setType(INGREDIENT_TYPE);
+        return intent;
+    }
+
+    public static Recipe getCurrentRecipe() {
+        return mRecipe;
+    }
+
 }

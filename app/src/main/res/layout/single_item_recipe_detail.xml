@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/single_recipe_detail_height"
     android:layout_margin="@dimen/recipe_detail_viewholder_margin"
-    android:background="@color/colorPrimary">
+    android:background="@color/colorRecipeDetailItemBackground">
 
     <TextView
         android:id="@+id/tv_single_recipe_detail"
