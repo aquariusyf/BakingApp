@@ -1,4 +1,4 @@
-package com.example.android.bakingapp;
+package com.example.android.bakingapp.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,6 +8,9 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.RecyclerView.ViewHolder;
+
+import com.example.android.bakingapp.R;
+import com.example.android.bakingapp.Recipe;
 
 import java.util.List;;
 
@@ -50,6 +53,10 @@ public class RecipeListAdapter extends RecyclerView.Adapter<ViewHolder> {
     public void updateDataSet(List<Recipe> newRecipes) {
         mRecipes = newRecipes;
         notifyDataSetChanged();
+    }
+
+    public List<Recipe> getRecipeList() {
+        return mRecipes;
     }
 
     public interface OnListItemClickListener {

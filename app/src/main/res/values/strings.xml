@@ -3,4 +3,11 @@
     <string name="dummy_recipe_name" translatable="false">Recipe Name</string>
     <string name="serving_label">Servings: </string>
     <string name="dummy_serving_number">8</string>
+    <string name="dummy_single_recipe_detail">Ingredients</string>
+    <string name="quantity_label">Quantity: </string>
+    <string name="dummy_quantity">2.5</string>
+    <string name="measure_label">Measure: </string>
+    <string name="dummy_measure">CUP</string>
+    <string name="ingredient_label">Ingredient: </string>
+    <string name="dummy_ingredient">Nutella or other chocolate-hazelnut spread</string>
 </resources>

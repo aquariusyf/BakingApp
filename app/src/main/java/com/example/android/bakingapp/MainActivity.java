@@ -1,18 +1,19 @@
 package com.example.android.bakingapp;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 
-import java.util.List;
+import com.example.android.bakingapp.adapters.RecipeListAdapter;
+import com.example.android.bakingapp.utils.JsonUtil;
 
 public class MainActivity extends AppCompatActivity {
 
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
+    public static final String RECIPE_PARCEL_KEY = "recipe";
 
     private RecyclerView mRecipeListRv;
     private RecipeListAdapter mAdapter;
@@ -33,7 +34,11 @@ public class MainActivity extends AppCompatActivity {
                 new RecipeListAdapter.OnListItemClickListener() {
                     @Override
                     public void onItemClick(int position) {
-
+                        Intent detailIntent = new Intent(MainActivity.this,
+                                RecipeDetailsActivity.class);
+                        detailIntent.putExtra(RECIPE_PARCEL_KEY,
+                                mAdapter.getRecipeList().get(position));
+                        startActivity(detailIntent);
                     }
                 });
         mRecipeListRv.setAdapter(mAdapter);

@@ -1,7 +1,8 @@
-package com.example.android.bakingapp;
+package com.example.android.bakingapp.utils;
 
 import android.content.Context;
 
+import com.example.android.bakingapp.Recipe;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 

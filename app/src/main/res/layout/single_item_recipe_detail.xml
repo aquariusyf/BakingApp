@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/single_recipe_detail_height"
+    android:layout_margin="@dimen/recipe_detail_viewholder_margin"
+    android:background="@color/colorPrimary">
+
+    <TextView
+        android:id="@+id/tv_single_recipe_detail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        tools:text="@string/dummy_single_recipe_detail"
+        style="@style/SingleItemRecipeDetailTextStyle"/>
+
+</FrameLayout>

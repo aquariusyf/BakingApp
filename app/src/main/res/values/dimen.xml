@@ -2,9 +2,18 @@
 <resources>
     <dimen name="recipe_name_text_size">24sp</dimen>
     <dimen name="serving_text_size">20sp</dimen>
+    <dimen name="ingredient_text_size">16sp</dimen>
+    <dimen name="single_recipe_detail_large_text_size">24sp</dimen>
+
     <dimen name="single_recipe_height">200dp</dimen>
     <dimen name="recipe_list_margin">8dp</dimen>
     <dimen name="recipe_viewholder_margin">24dp</dimen>
     <dimen name="recipe_name_paddingTop">42dp</dimen>
+
+    <dimen name="single_recipe_detail_height">100dp</dimen>
+    <dimen name="recipe_detail_viewholder_margin">8dp</dimen>
+
+    <dimen name="single_ingredient_height">110dp</dimen>
+    <dimen name="ingredient_viewholder_margin">6dp</dimen>
 
 </resources>
