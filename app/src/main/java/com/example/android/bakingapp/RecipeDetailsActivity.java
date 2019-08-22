@@ -16,6 +16,7 @@ public class RecipeDetailsActivity extends AppCompatActivity {
     private static final String LOG_TAG = RecipeDetailsActivity.class.getSimpleName();
     public static final String INGREDIENT_TYPE = "ingredient";
     public static final String STEP_TYPE = "step";
+    public static int sStepIndex;
 
     private RecyclerView ingredientsListRv;
     private RecipeDetailListAdapter mAdapter;
@@ -61,6 +62,9 @@ public class RecipeDetailsActivity extends AppCompatActivity {
                     public void onItemClick(int position) {
                         if(position == 0) {
                             startActivity(createIngredientsIntent());
+                        } else {
+                            sStepIndex = position - 1;
+                            startActivity(createStepsIntent());
                         }
                     }
                 });
@@ -86,8 +90,19 @@ public class RecipeDetailsActivity extends AppCompatActivity {
         return intent;
     }
 
+    private Intent createStepsIntent() {
+        Intent intent = new Intent(RecipeDetailsActivity.this,
+                RecipeIngredientsAndStepsActivity.class);
+        intent.setType(STEP_TYPE);
+        return intent;
+    }
+
     public static Recipe getCurrentRecipe() {
         return mRecipe;
+    }
+
+    public static int getStepIndex() {
+        return sStepIndex;
     }
 
 }

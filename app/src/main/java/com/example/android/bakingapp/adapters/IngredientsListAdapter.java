@@ -34,8 +34,10 @@ public class IngredientsListAdapter extends RecyclerView.Adapter<ViewHolder> {
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+        String quantity = new java.text.DecimalFormat("#.#")
+                .format(mIngredients.get(position).getQuantity());
         ((IngredientViewHolder) holder).quantityTv
-                .setText(mIngredients.get(position).getQuantity() + "");
+                .setText(quantity);
         ((IngredientViewHolder) holder).measureTv
                 .setText(mIngredients.get(position).getMeasure());
         ((IngredientViewHolder) holder).ingredientTv

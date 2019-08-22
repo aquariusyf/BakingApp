@@ -10,7 +10,8 @@
     <string name="dummy_measure">CUP</string>
     <string name="ingredient_label">Ingredient: </string>
     <string name="dummy_ingredient">Nutella or other chocolate-hazelnut spread</string>
+    <string name="dummy_description">2. Whisk the graham cracker crumbs, 50 grams (1/4 cup) of sugar, and 1/2 teaspoon of salt together in a medium bowl. Pour the melted butter and 1 teaspoon of vanilla into the dry ingredients and stir together until evenly mixed.</string>
+    <string name="btn_previous_text">Previous</string>
+    <string name="btn_next_text">Next</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

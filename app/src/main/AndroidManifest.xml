@@ -11,8 +11,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".RecipeIngredientsAndStepsActivity"></activity>
-        <activity android:name=".RecipeDetailsActivity" />
+        <activity android:name=".RecipeIngredientsAndStepsActivity"
+                  android:configChanges="keyboardHidden|orientation|screenSize"/>
+        <activity android:name=".RecipeDetailsActivity"
+                  android:parentActivityName=".MainActivity"
+                  android:configChanges="orientation|screenSize"/>
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop">
