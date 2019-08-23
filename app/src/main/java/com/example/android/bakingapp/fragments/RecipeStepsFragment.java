@@ -37,11 +37,9 @@ public class RecipeStepsFragment extends Fragment {
     private MediaSource mMediaSource;
     private Recipe mCurrentRecipe;
 
-
     public RecipeStepsFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -56,7 +54,6 @@ public class RecipeStepsFragment extends Fragment {
         initViewsAndVariables();
         setDescriptionView();
         setMediaSource();
-        setButtonEnable();
         setTitleText();
     }
 
@@ -65,8 +62,6 @@ public class RecipeStepsFragment extends Fragment {
         super.onDestroy();
         releaseMediaPlayer();
     }
-
-
 
     private void initViewsAndVariables() {
         mCurrentRecipe = RecipeDetailsActivity.getCurrentRecipe();
@@ -77,29 +72,36 @@ public class RecipeStepsFragment extends Fragment {
         mPlayerView = getActivity().findViewById(R.id.player_view);
 
         mPreviousBtn = getActivity().findViewById(R.id.btn_previous);
-        mPreviousBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sStepIndex--;
-                setDescriptionView();
-                setMediaSource();
-                setButtonEnable();
-                setTitleText();
-            }
-        });
-
         mNextBtn = getActivity().findViewById(R.id.btn_next);
-        mNextBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sStepIndex++;
-                setDescriptionView();
-                setMediaSource();
-                setButtonEnable();
-                setTitleText();
-            }
-        });
 
+        if(!RecipeDetailsActivity.getIfTwoPanel()) {
+            mPreviousBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    sStepIndex--;
+                    setDescriptionView();
+                    setMediaSource();
+                    setButtonEnable();
+                    setTitleText();
+                }
+            });
+
+            mNextBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    sStepIndex++;
+                    setDescriptionView();
+                    setMediaSource();
+                    setButtonEnable();
+                    setTitleText();
+                }
+            });
+
+            setButtonEnable();
+        } else {
+            mPreviousBtn.setVisibility(View.GONE);
+            mNextBtn.setVisibility(View.GONE);
+        }
     }
 
     private void setButtonEnable() {
@@ -127,8 +129,10 @@ public class RecipeStepsFragment extends Fragment {
     }
 
     private void setTitleText() {
-        String title = mCurrentRecipe.getSteps().get(sStepIndex).getShortDescription();
-        getActivity().setTitle(title);
+        if(!RecipeDetailsActivity.getIfTwoPanel()) {
+            String title = mCurrentRecipe.getSteps().get(sStepIndex).getShortDescription();
+            getActivity().setTitle(title);
+        }
     }
 
     private void setMediaSource() {

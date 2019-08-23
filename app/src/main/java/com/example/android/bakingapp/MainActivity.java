@@ -1,6 +1,7 @@
 package com.example.android.bakingapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,6 +20,8 @@ public class MainActivity extends AppCompatActivity {
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
     public static final String RECIPE_PARCEL_KEY = "single_recipe";
     public static final String RECIPE_LIST_PARCEL_KEY = "recipe_list";
+    public static final String TWO_PANEL_KEY = "two_panel";
+    public static boolean sTwoPanel;
 
     private RecyclerView mRecipeListRv;
     private RecipeListAdapter mAdapter;
@@ -29,8 +32,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         if(savedInstanceState != null && savedInstanceState.containsKey(RECIPE_LIST_PARCEL_KEY)) {
-            initRecipeList(savedInstanceState.<Recipe>getParcelableArrayList(RECIPE_LIST_PARCEL_KEY));
+            sTwoPanel = savedInstanceState.getBoolean(TWO_PANEL_KEY);
+            initRecipeList(savedInstanceState.getParcelableArrayList(RECIPE_LIST_PARCEL_KEY));
         } else {
+            checkIfTwoPanel();
             initRecipeList(JsonUtil.getRecipes(this));
         }
     }
@@ -40,11 +45,26 @@ public class MainActivity extends AppCompatActivity {
         super.onSaveInstanceState(outState);
         outState.putParcelableArrayList(RECIPE_LIST_PARCEL_KEY,
                 (ArrayList<? extends Parcelable>) mAdapter.getRecipeList());
+        outState.putBoolean(TWO_PANEL_KEY, sTwoPanel);
+    }
+
+    private void checkIfTwoPanel() {
+        if(findViewById(R.id.rv_recipe_list_tablet) != null) {
+            sTwoPanel = true;
+        } else {
+            sTwoPanel = false;
+        }
     }
 
     private void initRecipeList(List<Recipe> recipeList) {
-        mRecipeListRv = findViewById(R.id.rv_recipe_list);
-        mRecipeListRv.setLayoutManager(new LinearLayoutManager(this));
+        if(sTwoPanel) {
+            mRecipeListRv = findViewById(R.id.rv_recipe_list_tablet);
+            mRecipeListRv.setLayoutManager(new GridLayoutManager(this,
+                    3, RecyclerView.VERTICAL, false));
+        } else {
+            mRecipeListRv = findViewById(R.id.rv_recipe_list);
+            mRecipeListRv.setLayoutManager(new LinearLayoutManager(this));
+        }
         mAdapter = new RecipeListAdapter(this, recipeList,
                 new RecipeListAdapter.OnListItemClickListener() {
                     @Override
@@ -53,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
                                 RecipeDetailsActivity.class);
                         detailIntent.putExtra(RECIPE_PARCEL_KEY,
                                 mAdapter.getRecipeList().get(position));
+                        detailIntent.putExtra(TWO_PANEL_KEY, sTwoPanel);
                         startActivity(detailIntent);
                     }
                 });

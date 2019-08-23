@@ -36,8 +36,22 @@
         <item name="android:textAllCaps">false</item>
     </style>
 
+    <style name="IngredientTextLargeStyle">
+        <item name="android:textSize">@dimen/ingredient_text_size_large</item>
+        <item name="android:textColor">@color/colorBlack</item>
+        <item name="android:fontFamily">monospace</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+
     <style name="DescriptionTextStyle">
         <item name="android:textSize">@dimen/description_text_size</item>
+        <item name="android:textColor">@color/colorBlack</item>
+        <item name="android:fontFamily">monospace</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+
+    <style name="DescriptionTextLargeStyle">
+        <item name="android:textSize">@dimen/description_text_size_large</item>
         <item name="android:textColor">@color/colorBlack</item>
         <item name="android:fontFamily">monospace</item>
         <item name="android:textAllCaps">false</item>

@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 
 import com.example.android.bakingapp.R;
 import com.example.android.bakingapp.Recipe;
+import com.example.android.bakingapp.RecipeDetailsActivity;
 import com.example.android.bakingapp.adapters.RecipeListAdapter.OnListItemClickListener;
 
 import java.util.List;
@@ -21,6 +22,7 @@ public class RecipeDetailListAdapter extends RecyclerView.Adapter<ViewHolder> {
     private List<Recipe.Ingredients> mIngredients;
     private List<Recipe.Steps> mSteps;
     private OnListItemClickListener mListener;
+    private static int sLastSelectedPosition;
 
     public RecipeDetailListAdapter(
             Context context,
@@ -31,6 +33,7 @@ public class RecipeDetailListAdapter extends RecyclerView.Adapter<ViewHolder> {
         mIngredients = ingredients;
         mSteps = steps;
         mListener = listener;
+        sLastSelectedPosition = -1;
     }
 
     @Override
@@ -46,8 +49,12 @@ public class RecipeDetailListAdapter extends RecyclerView.Adapter<ViewHolder> {
         if(getItemViewType(position) == 0) {
             ((RecipeDetailViewHolder) holder).detailTv
                     .setText(mContext.getResources().getString(R.string.dummy_single_recipe_detail));
+
         } else {
             setDetailText(position, holder);
+        }
+        if(position != sLastSelectedPosition) {
+            ((RecipeDetailViewHolder) holder).detailTv.setSelected(false);
         }
     }
 
@@ -94,6 +101,14 @@ public class RecipeDetailListAdapter extends RecyclerView.Adapter<ViewHolder> {
         @Override
         public void onClick(View v) {
             mListener.onItemClick(getAdapterPosition());
+            if(RecipeDetailsActivity.getIfTwoPanel()) {
+                detailTv.setSelected(true);
+                int lastPosition = sLastSelectedPosition;
+                sLastSelectedPosition = getAdapterPosition();
+                if(lastPosition != -1 && lastPosition != sLastSelectedPosition) {
+                    notifyItemChanged(lastPosition);
+                }
+            }
         }
     }
 

@@ -3,8 +3,10 @@
     <dimen name="recipe_name_text_size">24sp</dimen>
     <dimen name="serving_text_size">20sp</dimen>
     <dimen name="ingredient_text_size">16sp</dimen>
+    <dimen name="ingredient_text_size_large">24sp</dimen>
     <dimen name="single_recipe_detail_large_text_size">24sp</dimen>
     <dimen name="description_text_size">16sp</dimen>
+    <dimen name="description_text_size_large">24sp</dimen>
     <dimen name="button_text_size">20sp</dimen>
 
     <dimen name="single_recipe_height">200dp</dimen>

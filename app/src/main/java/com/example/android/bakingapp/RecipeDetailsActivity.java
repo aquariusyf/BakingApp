@@ -1,15 +1,19 @@
 package com.example.android.bakingapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.FrameLayout;
 
 import com.example.android.bakingapp.adapters.RecipeDetailListAdapter;
 import com.example.android.bakingapp.adapters.RecipeListAdapter;
+import com.example.android.bakingapp.fragments.RecipeIngredientsFragment;
+import com.example.android.bakingapp.fragments.RecipeStepsFragment;
 
 public class RecipeDetailsActivity extends AppCompatActivity {
 
@@ -21,7 +25,7 @@ public class RecipeDetailsActivity extends AppCompatActivity {
     private RecyclerView ingredientsListRv;
     private RecipeDetailListAdapter mAdapter;
     private static Recipe mRecipe;
-    private static boolean twoPanel;
+    private static boolean sTwoPanel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,20 +37,40 @@ public class RecipeDetailsActivity extends AppCompatActivity {
             finish();
         }
         setTitle(mRecipe.getName());
-        checkIfTwoPanel();
-        if(twoPanel) {
-
+        if(sTwoPanel) {
+            initViewsForTwoPanel();
         } else {
             initViewsForSinglePanel();
         }
 
     }
 
-    private void checkIfTwoPanel() {
-        if(findViewById(R.id.fragment_container) != null) {
-            twoPanel = true;
+    private void initViewsForTwoPanel() {
+        ingredientsListRv = findViewById(R.id.rv_recipe_detail_list);
+        ingredientsListRv.setLayoutManager(new LinearLayoutManager(this));
+        mAdapter = new RecipeDetailListAdapter(
+                this,
+                mRecipe.getIngredients(),
+                mRecipe.getSteps(),
+                new RecipeListAdapter.OnListItemClickListener() {
+                    @Override
+                    public void onItemClick(int position) {
+                        updateFragment(position);
+                    }
+                });
+        ingredientsListRv.setAdapter(mAdapter);
+    }
+
+    private void updateFragment(int position) {
+        if(position == 0) {
+            RecipeIngredientsFragment fragment = new RecipeIngredientsFragment();
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, fragment).commitAllowingStateLoss();
         } else {
-            twoPanel = false;
+            sStepIndex = position - 1;
+            RecipeStepsFragment fragment = new RecipeStepsFragment();
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, fragment).commitAllowingStateLoss();
         }
     }
 
@@ -77,6 +101,7 @@ public class RecipeDetailsActivity extends AppCompatActivity {
             return false;
         }
         mRecipe = intent.getParcelableExtra(MainActivity.RECIPE_PARCEL_KEY);
+        sTwoPanel = intent.getBooleanExtra(MainActivity.TWO_PANEL_KEY, false);
         if(mRecipe == null) {
             return false;
         }
@@ -104,5 +129,7 @@ public class RecipeDetailsActivity extends AppCompatActivity {
     public static int getStepIndex() {
         return sStepIndex;
     }
+
+    public static boolean getIfTwoPanel() { return sTwoPanel; }
 
 }

@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".RecipeIngredientsAndStepsActivity"
-                  android:configChanges="keyboardHidden|orientation|screenSize"/>
+                  android:configChanges="orientation|screenSize"/>
         <activity android:name=".RecipeDetailsActivity"
                   android:parentActivityName=".MainActivity"
                   android:configChanges="orientation|screenSize"/>
