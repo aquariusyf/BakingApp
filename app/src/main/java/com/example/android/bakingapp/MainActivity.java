@@ -5,12 +5,15 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
 
 import com.example.android.bakingapp.adapters.RecipeListAdapter;
 import com.example.android.bakingapp.utils.JsonUtil;
+import com.example.android.bakingapp.widget.BakingAppWidgetProvider;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
 
     private RecyclerView mRecipeListRv;
     private RecipeListAdapter mAdapter;
+
+    private AppWidgetManager mWidgetManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,9 +79,24 @@ public class MainActivity extends AppCompatActivity {
                         detailIntent.putExtra(RECIPE_PARCEL_KEY,
                                 mAdapter.getRecipeList().get(position));
                         detailIntent.putExtra(TWO_PANEL_KEY, sTwoPanel);
+                        updateWidget(mAdapter.getRecipeList().get(position));
                         startActivity(detailIntent);
                     }
                 });
         mRecipeListRv.setAdapter(mAdapter);
+    }
+
+    private void updateWidget(Recipe recipe) {
+        mWidgetManager = AppWidgetManager.getInstance(this);
+        int[] widgetIds = mWidgetManager
+                .getAppWidgetIds(new ComponentName(this, BakingAppWidgetProvider.class));
+        String recipeName = getString(R.string.widget_initial_text);
+        List<Recipe.Ingredients> ingredients = new ArrayList<>();
+        if(recipe != null) {
+            recipeName = recipe.getName();
+            ingredients = recipe.getIngredients();
+        }
+        BakingAppWidgetProvider.updateWidgetContent(
+                this, mWidgetManager, widgetIds, recipeName, ingredients);
     }
 }

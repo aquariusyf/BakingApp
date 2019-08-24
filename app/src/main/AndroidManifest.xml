@@ -11,11 +11,25 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".RecipeIngredientsAndStepsActivity"
-                  android:configChanges="orientation|screenSize"/>
-        <activity android:name=".RecipeDetailsActivity"
-                  android:parentActivityName=".MainActivity"
-                  android:configChanges="orientation|screenSize"/>
+        <receiver android:name=".widget.BakingAppWidgetProvider">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/baking_app_widget_provider_info" />
+        </receiver>
+
+        <activity
+            android:name=".RecipeIngredientsAndStepsActivity"
+            android:launchMode="singleTop"
+            android:configChanges="orientation|screenSize" />
+        <activity
+            android:name=".RecipeDetailsActivity"
+            android:launchMode="singleTop"
+            android:configChanges="orientation|screenSize"
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop">
@@ -25,6 +39,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <service android:name=".widget.ListViewService"
+                 android:permission="android.permission.BIND_REMOTEVIEWS">
+
+        </service>
+
     </application>
 
 </manifest>
