@@ -29,6 +29,6 @@
 
     <dimen name="exo_player_view_height">330dp</dimen>
 
-    <dimen name="widget_margin">8dp</dimen>
+    <dimen name="widget_title_listview_margin">8dp</dimen>
 
 </resources>
