@@ -42,7 +42,6 @@
 
         <service android:name=".widget.ListViewService"
                  android:permission="android.permission.BIND_REMOTEVIEWS">
-
         </service>
 
     </application>
