@@ -58,6 +58,18 @@ public class RecipeStepsFragment extends Fragment {
     }
 
     @Override
+    public void onPause() {
+        super.onPause();
+        pauseMediaPlayer();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        resumeMediaPlayer();
+    }
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
         releaseMediaPlayer();
@@ -165,6 +177,18 @@ public class RecipeStepsFragment extends Fragment {
         if(mPlayer != null) {
             mPlayer.stop();
             mPlayer.release();
+        }
+    }
+
+    private void pauseMediaPlayer() {
+        if(mPlayer != null) {
+            mPlayer.setPlayWhenReady(false);
+        }
+    }
+
+    private void resumeMediaPlayer() {
+        if(mPlayer != null ) {
+            mPlayer.setPlayWhenReady(true);
         }
     }
 
