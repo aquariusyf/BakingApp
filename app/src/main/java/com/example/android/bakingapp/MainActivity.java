@@ -5,11 +5,13 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
 import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.util.DisplayMetrics;
 
 import com.example.android.bakingapp.adapters.RecipeListAdapter;
 import com.example.android.bakingapp.utils.JsonUtil;
@@ -61,11 +63,21 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private int numberOfColumns(Activity aActivity) {
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        aActivity.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        int widthDivider = 750;
+        int width = displayMetrics.widthPixels;
+        int nColumns = width / widthDivider;
+        if (nColumns < 2) return 2; //to keep the grid aspect
+        return nColumns;
+    }
+
     private void initRecipeList(List<Recipe> recipeList) {
         if(sTwoPanel) {
             mRecipeListRv = findViewById(R.id.rv_recipe_list_tablet);
             mRecipeListRv.setLayoutManager(new GridLayoutManager(this,
-                    3, RecyclerView.VERTICAL, false));
+                    numberOfColumns(this), RecyclerView.VERTICAL, false));
         } else {
             mRecipeListRv = findViewById(R.id.rv_recipe_list);
             mRecipeListRv.setLayoutManager(new LinearLayoutManager(this));
